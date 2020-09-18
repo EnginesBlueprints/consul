@@ -16,14 +16,13 @@
         "patch": 0
       }
     },
-    "timestamp": "2020-09-18T10:21:56+10:00"
+    "timestamp": "2020-09-18T10:29:49+10:00"
   },
   "software": {
     "base": {
-      "name": "consil",
+      "name": "consul",
       "framework": "base_c",
       "deployment_type": "worker",
-      "http_protocol": "https_and_http",
       "memory": {
         "required": 100,
         "recommended": 100
