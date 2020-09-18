@@ -15,12 +15,36 @@
         "level": "alpha",
         "patch": 0
       }
-    }
+    },
+    "timestamp": "2020-09-18T10:21:56+10:00"
   },
   "software": {
     "base": {
-      "deployment_type": "web",
-      "http_protocol": "https_and_http"
-    }
+      "name": "consil",
+      "framework": "base_c",
+      "deployment_type": "worker",
+      "http_protocol": "https_and_http",
+      "memory": {
+        "required": 100,
+        "recommended": 100
+      }
+    },
+    "scripts": {
+      "start": {
+        "language": "sh",
+        "content": "#!/bin/sh\r\nconsul agent -dev"
+      }
+    },
+    "external_repositories": [
+      {
+        "source": "\"deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main\"",
+        "key": "https://apt.releases.hashicorp.com/gpg"
+      }
+    ],
+    "system_packages": [
+      {
+        "package": "consul"
+      }
+    ]
   }
 }
