@@ -16,7 +16,7 @@
         "patch": 0
       }
     },
-    "timestamp": "2020-09-20T09:22:13+10:00"
+    "timestamp": "2020-09-20T09:42:17+10:00"
   },
   "software": {
     "base": {
@@ -32,7 +32,7 @@
     "scripts": {
       "start": {
         "language": "sh",
-        "content": "#!/bin/sh\r\nconsul -config-file /home/app/consul.hcf"
+        "content": "#!/bin/sh\r\nconsul agent -config-file /home/app/consul.hcl"
       }
     },
     "external_repositories": [
@@ -44,6 +44,9 @@
     "system_packages": [
       {
         "package": "consul"
+      },
+      {
+        "package": "vim"
       }
     ],
     "service_configurations": [
@@ -74,7 +77,7 @@
     ],
     "template_files": [
       {
-        "path": "/home/app/consul.hcf",
+        "path": "/home/app/consul.hcl",
         "content": "# Full configuration options can be found at https://www.consul.io/docs/agent/options.html\r\n\r\n# datacenter\r\n# This flag controls the datacenter in which the agent is running. If not provided,\r\n# it defaults to \"dc1\". Consul has first-class support for multiple datacenters, but \r\n# it relies on proper configuration. Nodes in the same datacenter should be on a \r\n# single LAN.\r\ndatacenter = \"dc-engines-internal\"\r\n\r\n# data_dir\r\n# This flag provides a data directory for the agent to store state. This is required\r\n# for all agents. The directory should be durable across reboots. This is especially\r\n# critical for agents that are running in server mode as they must be able to persist\r\n# cluster state. Additionally, the directory must support the use of filesystem\r\n# locking, meaning some types of mounted folders (e.g. VirtualBox shared folders) may\r\n# not be suitable.\r\ndata_dir = \"/home/fs/consul\"\r\n\r\n# client_addr\r\n# The address to which Consul will bind client interfaces, including the HTTP and DNS\r\n# servers. By default, this is \"127.0.0.1\", allowing only loopback connections. In\r\n# Consul 1.0 and later this can be set to a space-separated list of addresses to bind\r\n# to, or a go-sockaddr template that can potentially resolve to multiple addresses.\r\nclient_addr = \"0.0.0.0\"\r\n\r\n# ui\r\n# Enables the built-in web UI server and the required HTTP routes. This eliminates\r\n# the need to maintain the Consul web UI files separately from the binary.\r\nui = true\r\n\r\n# server\r\n# This flag is used to control if an agent is in server or client mode. When provided,\r\n# an agent will act as a Consul server. Each Consul cluster must have at least one\r\n# server and ideally no more than 5 per datacenter. All servers participate in the Raft\r\n# consensus algorithm to ensure that transactions occur in a consistent, linearizable\r\n# manner. Transactions modify cluster state, which is maintained on all server nodes to\r\n# ensure availability in the case of node failure. Server nodes also participate in a\r\n# WAN gossip pool with server nodes in other datacenters. Servers act as gateways to\r\n# other datacenters and forward traffic as appropriate.\r\nserver = true\r\n\r\n# bootstrap_expect\r\n# encrypt\r\n# Specifies the secret key to use for encryption of Consul network traffic. This key must\r\n# be 32-bytes that are Base64-encoded. The easiest way to create an encryption key is to\r\n# use consul keygen. All nodes within a cluster must share the same encryption key to\r\n# communicate. The provided key is automatically persisted to the data directory and loaded\r\n# automatically whenever the agent is restarted. This means that to encrypt Consul's gossip\r\n# protocol, this option only needs to be provided once on each agent's initial startup\r\n# sequence. If it is provided after Consul has been initialized with an encryption key,\r\n# then the provided key is ignored and a warning will be displayed.\r\n#encrypt = \"...\"\r\n\r\n# retry_join\r\n# Similar to -join but allows retrying a join until it is successful. Once it joins \r\n# successfully to a member in a list of members it will never attempt to join again.\r\n# Agents will then solely maintain their membership via gossip. This is useful for\r\n# cases where you know the address will eventually be available. This option can be\r\n# specified multiple times to specify multiple agents to join. The value can contain\r\n# IPv4, IPv6, or DNS addresses. In Consul 1.1.0 and later this can be set to a go-sockaddr\r\n# template. If Consul is running on the non-default Serf LAN port, this must be specified\r\n# as well. IPv6 must use the \"bracketed\" syntax. If multiple values are given, they are\r\n# tried and retried in the order listed until the first succeeds. Here are some examples:\r\n#retry_join = [\"consul.domain.internal\"]\r\nretry_join = [\"consul1.domain.internal\"]\r\nretry_join = [\"consul2.domain.internal\"]\r\nretry_join = [\"consul3.domain.internal\"]\r\n\r\n#retry_join = [\"10.0.4.67\"]\r\n#retry_join = [\"[::1]:8301\"]\r\n#retry_join = [\"consul.domain.internal\", \"10.0.4.67\"]\r\n# Cloud Auto-join examples:\r\n# More details - https://www.consul.io/docs/agent/cloud-auto-join\r\n#retry_join = [\"provider=aws tag_key=... tag_value=...\"]\r\n#retry_join = [\"provider=azure tag_name=... tag_value=... tenant_id=... client_id=... subscription_id=... secret_access_key=...\"]\r\n#retry_join = [\"provider=gce project_name=... tag_value=...\"]\r\n\r\n"
       }
     ]
