@@ -16,7 +16,7 @@
         "patch": 0
       }
     },
-    "timestamp": "2020-09-20T16:32:24+10:00"
+    "timestamp": "2020-09-21T13:55:22+10:00"
   },
   "software": {
     "base": {
@@ -35,7 +35,7 @@
         "content": "#!/bin/sh\r\nconsul agent -config-file /home/app/consul.hcl &\r\nwait\r\nconsul leave"
       },
       "first_run": {
-        "content": "#!/bin/sh\r\n\r\nsecret=`cat /home/.secrets/${secret_name}`\r\necho  encrypt = \\\"$secret\\\" >>/home/app/consul.hcl\r\n"
+        "content": "#!/bin/sh\r\n\r\n\r\necho  encrypt = \\\"$secret\\\" >>/home/app/consul.hcl\r\n"
       }
     },
     "external_repositories": [
@@ -75,6 +75,16 @@
           "is_secret": "true",
           "length": "32",
           "mutable": "false"
+        }
+      }
+    ],
+    "environment_variables": [
+      {
+        "name": "secret",
+        "mandatory": true,
+        "ask_at_build_time": true,
+        "input": {
+          "type": "string"
         }
       }
     ],
