@@ -16,7 +16,7 @@
         "patch": 0
       }
     },
-    "timestamp": "2020-09-21T15:12:21+10:00"
+    "timestamp": "2020-09-21T16:34:53+10:00"
   },
   "software": {
     "base": {
@@ -32,10 +32,10 @@
     "scripts": {
       "start": {
         "language": "sh",
-        "content": "#!/bin/sh\r\nconsul agent -retry-join $peer1 -retry-join $peer2  -config-file /home/app/consul.hcl &\r\nwait\r\nconsul leave"
+        "content": "#!/bin/sh\r\nconsul agent -retry-join $peer1 -retry-join $peer2  -config-file /home/app/consul.hcl  -bootstrap-expect 3 &\r\nwait\r\nconsul leave"
       },
       "first_run": {
-        "content": "#!/bin/sh\r\n\r\n\r\necho  encrypt = \\\"$secret\\\" >>/home/app/consul.hcl\r\n"
+        "content": "#!/bin/sh\r\n\r\necho  encrypt = \\\"$secret\\\" >>/home/app/consul.hcl\r\n"
       }
     },
     "external_repositories": [
